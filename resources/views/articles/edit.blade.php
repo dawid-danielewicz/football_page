@@ -1,0 +1,62 @@
+@extends('layout')
+
+@section('content')
+    <h1 class="text-center my-7 font-bold text-3xl">Edit Article</h1>
+
+    <form action="{{ route('articles.update', ['id' => $article->id]) }}" method="POST">
+        @method('PUT')
+        @csrf
+        <div class="mb-5">
+            <label for="title">Title: </label>
+            <input type="text" name="title" value="{{ $article->title }}" class="bg-gray-100 border-gray-300 p-2 rounded-md border w-full">
+
+            @error('title')
+            <p class="text-red-700 font-bold text-center">{{  $message }}</p>
+            @enderror
+
+        </div>
+
+        <div class="mb-5">
+            <label for="slug">Slug: </label>
+            <input type="text" name="slug" value="{{ $article->slug }}" class="bg-gray-100 border-gray-300 p-2 rounded-md border w-full">
+
+            @error('slug')
+            <p class="text-red-700 font-bold text-center">{{  $message }}</p>
+            @enderror
+
+        </div>
+
+        <div class="mb-5">
+            <label for="excerpt">Excerpt: </label>
+            <textarea name="excerpt" class="bg-gray-100 border-gray-300 p-2 rounded-md border w-full h-32">{{ $article->excerpt }}</textarea>
+
+            @error('excerpt')
+            <p class="text-red-700 font-bold text-center">{{  $message }}</p>
+            @enderror
+
+        </div>
+
+        <div class="mb-5">
+            <label for="content">Content: </label>
+            <textarea name="content" class="bg-gray-100 border-gray-300 p-2 rounded-md border w-full h-96">{{ $article->content }}</textarea>
+
+            @error('content')
+            <p class="text-red-700 font-bold text-center">{{  $message }}</p>
+            @enderror
+
+        </div>
+
+        <div class="mb-5">
+            <label for="slot">Slot: </label>
+            <select id="slot" name="slot" class="bg-gray-100 border-gray-300 p-2 rounded-md border w-full">
+                @foreach($slots as $slot)
+                    <option value="{{ $slot }}" @selected($current_slot->name == $slot)>{{ $slot }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <input type="hidden" name="user_id" value="1">
+
+        <input type="submit" value="Update" class="p-2 bg-teal-600 rounded-md inline-block text-white font-bold my-5 cursor-pointer hover:bg-teal-700">
+    </form>
+@endsection
